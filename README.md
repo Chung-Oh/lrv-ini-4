@@ -21,9 +21,9 @@ To send emails in the language you want, you need to create a notification class
 
 **Laravel-ide-helper** installed to help with facades autocomplete `composer require --dev barryvdh/laravel-ide-helper`.
 After installation go to *App\Providers\AppServiceProvider.php* and put in *register* method:
-`
+
     if ($this->app->environment() !== 'production') {
         $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
     }
-`
+
 Then execute, to finally work: `php artisan ide-helper:generate`.
