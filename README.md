@@ -14,3 +14,7 @@ Dont forget of enable on *env* file)
 Translation Package `composer require caouecs/laravel-lang:~4.0`, after importing go to vendor package, copy language pack and
 paste *resourses/lang/*. And finally go to the file *config/app.php* in the key *locale* and *fallback_locale* put in the
 values folder name that was pasted into *resources/*.
+
+To send emails in the language you want, you need to create a notification class to override Trait
+`php artisan make:notification MyClassNotification`. Override the **toMail($notifiable)** method and in the User class implement
+**sendPasswordResetNotification($token)** method

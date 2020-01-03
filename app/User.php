@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Notifications\MyResetPasswordNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -36,4 +37,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Sobreescrevendo o método da classe pai para enviar email com conteudo em portugues.
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new MyResetPasswordNotification($token));
+    }
 }
