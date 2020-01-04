@@ -37,4 +37,9 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    public function redirectTo()
+    {
+        return \Auth::user()->role == \App\User::ROLE_ADMIN ? '/admin/home' : '/home';
+    }
 }

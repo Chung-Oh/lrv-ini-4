@@ -25,3 +25,15 @@ $factory->define(User::class, function (Faker $faker) {
         'remember_token' => Str::random(10),
     ];
 });
+
+$factory->state(\App\User::class, 'admin', function (Faker $faker) {
+    return [
+        'role' => \App\User::ROLE_ADMIN
+    ];
+});
+
+$factory->state(\App\User::class, 'user', function (Faker $faker) {
+    return [
+        'role' => \App\User::ROLE_USER
+    ];
+});
