@@ -11,12 +11,14 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
+        factory(\App\User::class, 1)->states('user')->create();
         factory(\App\User::class, 1)->states('admin')->create([
-            'email' => 'admin@user.com'
+            'email' => 'admin@user.com',
+            'phone' => '11988775544',
+            'cpf'   => '73228699981'
         ]);
         factory(\App\User::class, 1)->states('user')->create([
             'email' => 'user@user.com'
         ]);
-        factory(\App\User::class, 3)->states('user')->make();
     }
 }

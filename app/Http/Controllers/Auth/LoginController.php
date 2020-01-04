@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -41,5 +42,14 @@ class LoginController extends Controller
     public function redirectTo()
     {
         return \Auth::user()->role == \App\User::ROLE_ADMIN ? '/admin/home' : '/home';
+    }
+
+    public function logout(Request $request)
+    {
+        $role = (int) $request->user()->role;
+        $this->guard()->logout();
+        $request->session()->invalidate();
+
+        return $role == \App\User::ROLE_ADMIN ? redirect('admin/login') : redirect('/login');
     }
 }

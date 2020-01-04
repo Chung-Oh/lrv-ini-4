@@ -25,6 +25,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        \Validator::extend('cpf', function ($attribute, $value, $paramaters, $validator) {
+            return (new \Code\Validator\Cpf())->isValid($value);
+        });
     }
 }
