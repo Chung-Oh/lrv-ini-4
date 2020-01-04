@@ -1,4 +1,6 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app') --}}
+{{-- Função do App\helpers.php para pegar o prefixo de admin --}}
+@extends(layout())
 
 @section('content')
 <div class="container">

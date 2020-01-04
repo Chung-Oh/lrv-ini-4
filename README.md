@@ -27,3 +27,5 @@ After installation go to *App\Providers\AppServiceProvider.php* and put in *regi
     }
 
 Then execute, to finally work: `php artisan ide-helper:generate`.
+
+A helper was created in **App/helpers.php** to handle app and admin views.
