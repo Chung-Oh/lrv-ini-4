@@ -11,6 +11,8 @@
 |
 */
 
+use Illuminate\Http\Request;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -51,3 +53,10 @@ Route::group(['middleware' => 'auth'], function () {
 // Route::get('/test', function () {
 //     echo 'Ola Mundo...';
 // })->middleware('auth');
+
+Route::get('auth', function (Request $request) {
+    // dd($request->user());
+    dd(\Auth::id());
+    // dd(\Auth::user());
+    // dd(\Auth::check());
+});
