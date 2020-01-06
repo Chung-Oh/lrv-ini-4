@@ -40,3 +40,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::post('/login/social', 'Auth\LoginController@loginSocial');
     Route::get('/login/callback', 'Auth\LoginController@loginCallback');
 });
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/test', function () {
+        echo 'Ola Mundo...';
+    });
+});
+
+// Outra abordagem abaixo
+// Route::get('/test', function () {
+//     echo 'Ola Mundo...';
+// })->middleware('auth');
