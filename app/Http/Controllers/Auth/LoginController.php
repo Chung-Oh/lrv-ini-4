@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Socialite;
+use App\User;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -39,9 +41,41 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    public function loginSocial(Request $request)
+    {
+        $this->validate($request, [
+            'social_type' => 'required|in:google,github'
+        ]);
+        $socialType = $request->get('social_type');
+        \Session::put('social_type', $socialType);
+
+        return Socialite::driver($socialType)->redirect();
+    }
+
+    public function loginCallback()
+    {
+        $socialType = \Session::pull('social_type');
+        $userSocial = Socialite::driver($socialType)->user();
+        $user = User::where('email', $userSocial->email)->first();
+
+        if (!$user) {
+            $user = User::create([
+                'name' => $userSocial->name,
+                'email' => $userSocial->email,
+                // 'password' => bcrypt(str_random(10)),
+                'password' => bcrypt('123456'),
+                'role' => User::ROLE_USER,
+                'phone' => '',
+                'cpf' => ''
+            ]);
+        }
+        \Auth::login($user);
+        return redirect()->intended($this->redirectPath());
+    }
+
     public function redirectTo()
     {
-        return \Auth::user()->role == \App\User::ROLE_ADMIN ? '/admin/home' : '/home';
+        return \Auth::user()->role == User::ROLE_ADMIN ? '/admin/home' : '/home';
     }
 
     public function logout(Request $request)
@@ -50,7 +84,7 @@ class LoginController extends Controller
         $this->guard()->logout();
         $request->session()->invalidate();
 
-        return $role == \App\User::ROLE_ADMIN ? redirect('admin/login') : redirect('/login');
+        return $role == User::ROLE_ADMIN ? redirect('admin/login') : redirect('/login');
     }
 
     protected function credentials(Request $request)

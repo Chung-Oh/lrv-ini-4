@@ -67,6 +67,20 @@
                             </div>
                         </div>
                     </form>
+                    {{-- SOCIALITE --}}
+                    <form class="form-inline py-5" method="post" action="{{ url('/login/social') }}">
+                        {{ csrf_field() }}
+                        <div class="col-md-12 text-center">
+
+                            <button type="submit" class="btn btn-secondary" value="google" name="social_type">
+                                Login with Google
+                            </button>
+
+                            <button type="submit" class="btn btn-secondary" value="github" name="social_type">
+                                Login with Github
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
