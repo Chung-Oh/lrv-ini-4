@@ -30,8 +30,7 @@ class AddPhoneAndCpfToUser extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('phone');
-            $table->dropColumn('cpf');
+            $table->dropColumn(['phone', 'cpf']);
         });
     }
 }

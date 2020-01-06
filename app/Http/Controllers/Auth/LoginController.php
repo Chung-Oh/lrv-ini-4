@@ -52,4 +52,37 @@ class LoginController extends Controller
 
         return $role == \App\User::ROLE_ADMIN ? redirect('admin/login') : redirect('/login');
     }
+
+    protected function credentials(Request $request)
+    {
+        $data = $request->only($this->username(), 'password');
+        // $data['phone'] = $data['email'];
+        $username = $this->userNameKey();
+
+        if ($username != $this->username()) {
+            $data[$this->userNameKey()] = $data[$this->username()];
+            unset($data[$this->username()]);
+        }
+
+        return $data;
+    }
+
+    protected function userNameKey()
+    {
+        $email = \Request::get('email');
+        // $validator = \Validator::make([
+        //     'email' => $email
+        // ], ['email' => 'cpf']);
+
+        // if (!$validator->fails()) {
+        if (strlen($email) == 11) {
+            return 'cpf';
+        }
+
+        if (is_numeric($email)) {
+            return 'phone';
+        }
+
+        return 'email';
+    }
 }
